@@ -1,6 +1,6 @@
 connection: "content_rs_replica"
-include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
-include: "/**/*.view.lkml"
+#include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
+include: "/**/*.view.lkml"                 # include all views in this project
 
 # datagroup: content_analytics_default_datagroup {
 #   # sql_trigger: SELECT MAX(id) FROM etl_log;;
