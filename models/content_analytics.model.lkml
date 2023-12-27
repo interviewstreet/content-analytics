@@ -11,6 +11,20 @@ include: "/**/*.view.lkml"
 
 explore: questions {
 
+  join: recruit_companies {
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${questions.question_company_id} =  ${recruit_companies.id};;
+  }
+
+  join: derived_hrw_library_questions_mapping {
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${questions.id} = ${derived_hrw_library_questions_mapping.qid} ;;
+  }
+
+
+
   join: derived_question_skill_mapping {
     type: left_outer
     relationship: one_to_many

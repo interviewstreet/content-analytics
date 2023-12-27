@@ -172,9 +172,9 @@ view: questions {
     sql: case when json_extract_path_text(custom,'company',true) = 14357 then id else null end ;;
     }
 
-  measure: is_library_question {
-    type: yesno
-    sql: case when json_extract_path_text(custom,'company',true) = 14357 then yes else no end ;;
+  dimension: is_library_question {
+    type: string
+    sql: case when json_extract_path_text(custom,'company',true) = 14357 then 'yes' else 'no' end ;;
   }
   measure: custom_questions {
     type: count_distinct
