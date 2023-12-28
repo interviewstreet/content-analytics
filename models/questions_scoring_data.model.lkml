@@ -17,6 +17,7 @@ explore: ever_paid {
         and ${recruit_tests.draft} =0
     and ${recruit_tests.state} <> 3;;
   }
+
   join: recruit_attempts {
     type: left_outer
     relationship: one_to_many

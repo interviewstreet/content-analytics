@@ -25,6 +25,12 @@ explore: questions {
     and ${recruit_companies.name} not like 'Company%';;
   }
 
+  join: recruit_users {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${recruit_users.id} = ${questions.author_id}  ;;
+  }
+
   join: derived_hrw_library_questions_mapping {
     type: left_outer
     relationship: one_to_one
@@ -70,7 +76,7 @@ explore: questions {
   join: recruit_solves {
     type: left_outer
     relationship: one_to_many
-    sql_on: ${recruit_attempts.id} = abs(${recruit_solves.aid})
+    sql_on: ${recruit_attempts.id} = ${recruit_solves.aid}
     and ${recruit_solves.aid} > 0
     and ${recruit_solves.status} = 2
 ;;
