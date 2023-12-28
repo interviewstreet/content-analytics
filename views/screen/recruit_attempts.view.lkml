@@ -31,6 +31,7 @@ view: recruit_attempts {
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
+    case_sensitive: no
   }
   dimension_group: endtime {
     type: time

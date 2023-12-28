@@ -81,4 +81,31 @@ view: skills {
     type: count
     drill_fields: [id, name]
   }
+
+  parameter: date_granularity {
+    type: unquoted
+    description: "Select the appropiate level of granularity for dashboard."
+    default_value: "day"
+
+    allowed_value: {
+      label: "Day"
+      value: "day"
+    }
+    allowed_value: {
+      label: "Month"
+      value: "month"
+    }
+    allowed_value: {
+      label: "Quarter"
+      value: "quarter"
+    }
+    allowed_value: {
+      label: "Year"
+      value: "year"
+    }
+    allowed_value: {
+      label: "Week"
+      value: "week"
+    }
+  }
 }

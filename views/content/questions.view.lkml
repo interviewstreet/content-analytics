@@ -180,4 +180,36 @@ view: questions {
     type: count_distinct
     sql: case when json_extract_path_text(custom,'company',true) <> 14357 then id else null end ;;
 }
+
+  dimension: MCQ_NonMCQ {
+    type: string
+    sql: case when ${type} = 'mcq' or ${type} = 'multiple_mcq' then 'MCQ' else 'Non_MCQ' end ;;
+  }
+
+  parameter: date_granularity {
+    type: unquoted
+    description: "Select the appropiate level of granularity for dashboard."
+    default_value: "day"
+
+    allowed_value: {
+      label: "Day"
+      value: "day"
+    }
+    allowed_value: {
+      label: "Month"
+      value: "month"
+    }
+    allowed_value: {
+      label: "Quarter"
+      value: "quarter"
+    }
+    allowed_value: {
+      label: "Year"
+      value: "year"
+    }
+    allowed_value: {
+      label: "Week"
+      value: "week"
+    }
+  }
 }
