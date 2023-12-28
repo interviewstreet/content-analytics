@@ -59,4 +59,44 @@ view: recruit_solves {
     type: count
     drill_fields: [id]
   }
+
+  dimension: percentage {
+    type: number
+    sql: case when json_extract_path_text(${TABLE}.metadata,'max_score',true) is not null
+AND trim(json_extract_path_text(${TABLE}.metadata,'max_score',true)) != ''
+AND cast((json_extract_path_text(${TABLE}.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
+then
+cast(${TABLE}.score as double precision)*100.0/cast( json_extract_path_text(${TABLE}.metadata,'max_score',true) as DOUBLE PRECISION)
+else 0 end;;
+  }
+
+  dimension: max_score {
+    type: number
+    sql: json_extract_path_text(${TABLE}.metadata,'max_score',true) ;;
+  }
+
+  measure: avg_percentage_score {
+    type: average
+    sql:  case when json_extract_path_text(${TABLE}.metadata,'max_score',true) is not null
+AND trim(json_extract_path_text(${TABLE}.metadata,'max_score',true)) != ''
+AND cast((json_extract_path_text(${TABLE}.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
+then
+cast(${TABLE}.score as double precision)*100.0/cast( json_extract_path_text(${TABLE}.metadata,'max_score',true) as DOUBLE PRECISION)
+else 0 end ;;
+  }
+
+  measure: medain_percentage_score {
+    type: median
+    sql:  case when json_extract_path_text(${TABLE}.metadata,'max_score',true) is not null
+AND trim(json_extract_path_text(${TABLE}.metadata,'max_score',true)) != ''
+AND cast((json_extract_path_text(${TABLE}.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
+then
+cast(${TABLE}.score as double precision)*100.0/cast( json_extract_path_text(${TABLE}.metadata,'max_score',true) as DOUBLE PRECISION)
+else 0 end ;;
+  }
+
+  measure: solves_count {
+    type: count_distinct
+    sql: ${id} ;;
+  }
 }

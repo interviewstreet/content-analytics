@@ -49,4 +49,9 @@ view: recruit_tests_questions {
     type: count
     drill_fields: [id]
   }
+  measure: tests_count {
+    type: count_distinct
+    sql: ${test_id};;
+    drill_fields: [test_id]
+  }
 }

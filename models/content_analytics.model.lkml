@@ -10,6 +10,7 @@ include: "/**/*.view.lkml"                 # include all views in this project
 # persist_with: content_analytics_default_datagroup
 
 explore: questions {
+  label: "content_analytics"
 
   join: recruit_companies {
     type: left_outer
@@ -74,6 +75,7 @@ explore: questions {
     and ${recruit_solves.status} = 2
 ;;
   }
+
 }
 
 explore: skills {}

@@ -159,7 +159,12 @@ view: questions {
 
   dimension: company_id {
     type: number
-    sql: json_extract_path_text(custom,'company',true) ;;
+    sql: json_extract_path_text(custom,'company',true)::integer ;;
+  }
+
+  dimension: author_id {
+    type: string
+    sql: json_extract_path_text(author,'id',true) ;;
   }
 
   dimension: role_type {
@@ -174,7 +179,7 @@ view: questions {
 
   dimension: is_library_question {
     type: string
-    sql: case when json_extract_path_text(custom,'company',true) = 14357 then 'yes' else 'no' end ;;
+    sql: case when json_extract_path_text(custom,'company',true) = 14357 then 'Library' else 'Custom' end ;;
   }
   measure: custom_questions {
     type: count_distinct
