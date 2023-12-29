@@ -191,6 +191,11 @@ view: questions {
     sql: case when ${type} = 'mcq' or ${type} = 'multiple_mcq' then 'MCQ' else 'Non_MCQ' end ;;
   }
 
+  dimension: is_leaked {
+    type: string
+    sql: case when json_extract_path_text(custom,'show',true) = 'true' then 'True' else 'False' end ;;
+  }
+
   parameter: date_granularity {
     type: unquoted
     description: "Select the appropiate level of granularity for dashboard."
