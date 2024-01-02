@@ -83,6 +83,18 @@ explore: questions {
 ;;
   }
 
+  # join: avg {
+  #   type: left_outer
+  #   relationship: many_to_one
+  #   sql_on: ${recruit_tests_questions.question_id} = ${avg.question_id} ;;
+  # }
+
+  # join: median {
+  #   type: left_outer
+  #   relationship: many_to_one
+  #   sql_on: ${recruit_tests_questions.question_id} = ${median.question_id} ;;
+  # }
+
 }
 
 explore: recruit_companies {
