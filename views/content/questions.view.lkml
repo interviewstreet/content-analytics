@@ -194,6 +194,11 @@ view: questions {
     sql: case when json_extract_path_text(${leaked_data},'show',true) = 'true' then 'True' else 'False' end ;;
   }
 
+  dimension: skills {
+    type: string
+    sql: json_extract_path_text(custom,'skills',true) ;;
+  }
+
   parameter: date_granularity {
     type: unquoted
     description: "Select the appropiate level of granularity for dashboard."

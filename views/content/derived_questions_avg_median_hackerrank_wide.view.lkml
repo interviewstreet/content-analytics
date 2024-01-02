@@ -14,6 +14,7 @@ derived_table: {
     LEFT JOIN recruit_rs_replica.recruit.recruit_tests  AS recruit_tests ON recruit_tests.company_id = recruit_companies.id
     and recruit_tests.draft =0
     and recruit_tests.state <> 3
+
     LEFT JOIN recruit_rs_replica.recruit.recruit_attempts  AS recruit_attempts ON abs(recruit_attempts.tid) = recruit_tests.id
     ----- ATTEMPT LEVEL FILTERS
     and lower(recruit_attempts.email) not like '%@hackerrank.com%'  --- Exclude HR internal emails
