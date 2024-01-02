@@ -4,6 +4,7 @@ view: derived_questions_avg_median {
               (SELECT
                   recruit_tests.company_id as company_id,
                   recruit_solves.qid  AS question_ID,
+                  questions.created_at as created_at,
                   case when json_extract_path_text(custom,'company',true) = 14357 then 'Library' else 'Custom' end  AS Is_library_question,
                   AVG(case when json_extract_path_text(recruit_solves.metadata,'max_score',true) is not null
                     AND trim(json_extract_path_text(recruit_solves.metadata,'max_score',true)) != ''
@@ -38,7 +39,8 @@ view: derived_questions_avg_median {
               GROUP BY
                   1,
                   2,
-                  3
+                  3,
+                  4
               ),
 
               qstn_median as
@@ -78,7 +80,7 @@ view: derived_questions_avg_median {
                   2
               )
 
-              select qstn_avg.company_id, qstn_avg.question_ID, qstn_avg.Is_library_question,qstn_median.median_percentage_score,qstn_avg.Avg_percentage_score,qstn_avg.question_attempts
+              select qstn_avg.company_id, qstn_avg.question_ID, qstn_avg.created_at,qstn_avg.Is_library_question,qstn_median.median_percentage_score,qstn_avg.Avg_percentage_score,qstn_avg.question_attempts
               from
               qstn_median
               inner join
@@ -100,6 +102,11 @@ view: derived_questions_avg_median {
       type: number
       sql: ${TABLE}.question_id ;;
     }
+
+  dimension_group: created_at {
+    type: time
+    sql: ${TABLE}.created_at ;;
+  }
 
     dimension: is_library_question {
       type: string
