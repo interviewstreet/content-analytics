@@ -17,7 +17,7 @@ view: derived_questions_avg_median {
               LEFT JOIN recruit_rs_replica.recruit.recruit_tests  AS recruit_tests ON recruit_tests.company_id = recruit_companies.id
                       and recruit_tests.draft =0
                   and recruit_tests.state <> 3
-              LEFT JOIN recruit_rs_replica.recruit.recruit_tests_questions  AS recruit_tests_questions ON recruit_tests.id = recruit_tests_questions.test_id
+--              LEFT JOIN recruit_rs_replica.recruit.recruit_tests_questions  AS recruit_tests_questions ON recruit_tests.id = recruit_tests_questions.test_id
 
               LEFT JOIN recruit_rs_replica.recruit.recruit_attempts  AS recruit_attempts ON abs(recruit_attempts.tid) = recruit_tests.id
                             ----- ATTEMPT LEVEL FILTERS
@@ -29,7 +29,7 @@ view: derived_questions_avg_median {
                     AND recruit_attempts.status =  7  ---- attempt submitted
 
               LEFT JOIN recruit_rs_replica.recruit.recruit_solves  AS recruit_solves ON recruit_attempts.id = recruit_solves.aid
-                  and recruit_tests_questions.question_id = recruit_solves.qid
+ --                 and recruit_tests_questions.question_id = recruit_solves.qid
 
                       and recruit_solves.aid > 0
                   and recruit_solves.status = 2
@@ -55,7 +55,7 @@ view: derived_questions_avg_median {
               LEFT JOIN recruit_rs_replica.recruit.recruit_tests  AS recruit_tests ON recruit_tests.company_id = recruit_companies.id
                       and recruit_tests.draft =0
                   and recruit_tests.state <> 3
-              LEFT JOIN recruit_rs_replica.recruit.recruit_tests_questions  AS recruit_tests_questions ON recruit_tests.id = recruit_tests_questions.test_id
+--              LEFT JOIN recruit_rs_replica.recruit.recruit_tests_questions  AS recruit_tests_questions ON recruit_tests.id = recruit_tests_questions.test_id
 
               LEFT JOIN recruit_rs_replica.recruit.recruit_attempts  AS recruit_attempts ON abs(recruit_attempts.tid) = recruit_tests.id
                             ----- ATTEMPT LEVEL FILTERS
@@ -67,7 +67,7 @@ view: derived_questions_avg_median {
                     AND recruit_attempts.status =  7  ---- attempt submitted
 
               LEFT JOIN recruit_rs_replica.recruit.recruit_solves  AS recruit_solves ON recruit_attempts.id = recruit_solves.aid
-                  and recruit_tests_questions.question_id = recruit_solves.qid
+ --                 and recruit_tests_questions.question_id = recruit_solves.qid
                   and recruit_solves.aid > 0
                   and recruit_solves.status = 2
               INNER JOIN content.questions  AS questions ON questions.id = recruit_solves.qid
