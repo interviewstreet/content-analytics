@@ -132,6 +132,12 @@ view: questions {
   }
 
   # derived measure & dimension
+
+  measure: question_count {
+    type: count_distinct
+    sql: ${id} ;;
+    drill_fields: [id, name, is_library_question, question_company_id]
+  }
   dimension: question_company_id {
     type: number
     sql: json_extract_path_text(custom,'company',true) ;;

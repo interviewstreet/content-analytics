@@ -46,13 +46,13 @@ explore: questions {
   }
 
   join: recruit_tests_questions {
-    type: inner
+    type: left_outer
     relationship: one_to_many
     sql_on: ${questions.id} = ${recruit_tests_questions.question_id} ;;
   }
 
   join: recruit_tests {
-    type: inner
+    type: left_outer
     relationship: many_to_one
     sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id}
     and ${recruit_tests.draft} =0
