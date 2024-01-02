@@ -6,11 +6,11 @@ view: derived_questions_avg_median {
                   recruit_solves.qid  AS question_ID,
                   case when json_extract_path_text(custom,'company',true) = 14357 then 'Library' else 'Custom' end  AS Is_library_question,
                   AVG(case when json_extract_path_text(recruit_solves.metadata,'max_score',true) is not null
-              AND trim(json_extract_path_text(recruit_solves.metadata,'max_score',true)) != ''
-              AND cast((json_extract_path_text(recruit_solves.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
-              then
-              cast(recruit_solves.score as double precision)*100.0/cast( json_extract_path_text(recruit_solves.metadata,'max_score',true) as DOUBLE PRECISION)
-              else 0 end ) AS Avg_percentage_score,
+                    AND trim(json_extract_path_text(recruit_solves.metadata,'max_score',true)) != ''
+                    AND cast((json_extract_path_text(recruit_solves.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
+                    then
+                    cast(recruit_solves.score as double precision)*100.0/cast( json_extract_path_text(recruit_solves.metadata,'max_score',true) as DOUBLE PRECISION)
+                    else 0 end ) AS Avg_percentage_score,
                   COUNT(DISTINCT recruit_solves.id) AS "question_attempts"
 
                   FROM recruit_rs_replica.recruit.recruit_companies as recruit_companies
@@ -42,11 +42,11 @@ view: derived_questions_avg_median {
                   recruit_solves.qid  AS question_ID,
                   case when json_extract_path_text(custom,'company',true) = 14357 then 'Library' else 'Custom' end  AS Is_library_question,
                   median(case when json_extract_path_text(recruit_solves.metadata,'max_score',true) is not null
-              AND trim(json_extract_path_text(recruit_solves.metadata,'max_score',true)) != ''
-              AND cast((json_extract_path_text(recruit_solves.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
-              then
-              cast(recruit_solves.score as double precision)*100.0/cast( json_extract_path_text(recruit_solves.metadata,'max_score',true) as DOUBLE PRECISION)
-              else 0 end ) AS median_percentage_score
+                    AND trim(json_extract_path_text(recruit_solves.metadata,'max_score',true)) != ''
+                    AND cast((json_extract_path_text(recruit_solves.metadata,'max_score',true))*1.0 as DOUBLE PRECISION) != 0
+                    then
+                    cast(recruit_solves.score as double precision)*100.0/cast( json_extract_path_text(recruit_solves.metadata,'max_score',true) as DOUBLE PRECISION)
+                    else 0 end ) AS median_percentage_score
                   FROM recruit_rs_replica.recruit.recruit_companies as recruit_companies
               LEFT JOIN recruit_rs_replica.recruit.recruit_tests  AS recruit_tests ON recruit_tests.company_id = recruit_companies.id
                       and recruit_tests.draft =0
@@ -71,7 +71,7 @@ view: derived_questions_avg_median {
                   2
               )
 
-              select qstn_avg.company_id, qstn_median.question_ID, qstn_median.Is_library_question,qstn_median.median_percentage_score,qstn_avg.Avg_percentage_score,qstn_avg.question_attempts
+              select qstn_avg.company_id, qstn_avg.question_ID, qstn_avg.Is_library_question,qstn_median.median_percentage_score,qstn_avg.Avg_percentage_score,qstn_avg.question_attempts
               from
               qstn_median
               inner join

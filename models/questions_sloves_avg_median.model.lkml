@@ -7,6 +7,7 @@ include: "/**/*.view.lkml"                 # include all views in this project
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 explore: derived_questions_avg_median {}
+explore: derived_questions_avg_median_hackerrank_wide {}
 # explore: order_items {
 #   join: orders {
 #     relationship: many_to_one

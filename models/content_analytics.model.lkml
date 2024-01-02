@@ -13,8 +13,8 @@ explore: questions {
   label: "content_analytics"
 
   join: recruit_companies {
-    type: left_outer
-    relationship: one_to_one
+    type: inner
+    relationship: many_to_one
     sql_on: ${questions.question_company_id} =  ${recruit_companies.id}
     and ${recruit_companies.id} not in (46242,  106529 )
     and lower(${recruit_companies.name}) not in ('none', ' ', 'hackerrank','interviewstreet') --- Filter internal accounts based on company names
@@ -26,14 +26,14 @@ explore: questions {
   }
 
   join: recruit_users {
-    type: left_outer
+    type: inner
     relationship: many_to_one
     sql_on: ${recruit_users.id} = ${questions.author_id}  ;;
   }
 
   join: derived_hrw_library_questions_mapping {
     type: left_outer
-    relationship: one_to_one
+    relationship: one_to_many
     sql_on: ${questions.id} = ${derived_hrw_library_questions_mapping.qid} ;;
   }
 
@@ -46,13 +46,13 @@ explore: questions {
   }
 
   join: recruit_tests_questions {
-    type: left_outer
+    type: inner
     relationship: one_to_many
     sql_on: ${questions.id} = ${recruit_tests_questions.question_id} ;;
   }
 
   join: recruit_tests {
-    type: left_outer
+    type: inner
     relationship: many_to_one
     sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id}
     and ${recruit_tests.draft} =0
@@ -77,9 +77,72 @@ explore: questions {
     type: left_outer
     relationship: one_to_many
     sql_on: ${recruit_attempts.id} = ${recruit_solves.aid}
+    and ${recruit_tests_questions.question_id} = ${recruit_solves.qid}
     and ${recruit_solves.aid} > 0
     and ${recruit_solves.status} = 2
 ;;
+  }
+
+}
+
+explore: recruit_companies {
+  label: "content_analytics_v2"
+
+  join: recruit_tests {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${recruit_tests.company_id} = ${recruit_companies.id}
+          and ${recruit_tests.draft} =0
+          and ${recruit_tests.state} <> 3
+          and ${recruit_companies.id} not in (46242,  106529 )
+          and lower(${recruit_companies.name}) not in ('none', ' ', 'hackerrank','interviewstreet') --- Filter internal accounts based on company names
+          and lower(${recruit_companies.name}) not like '%hackerrank%'
+          and lower(${recruit_companies.name}) not like '%hacker%rank%'
+          and lower(${recruit_companies.name}) not like '%interviewstreet%'
+          and lower(${recruit_companies.name}) not like '%interview%street%'
+          and ${recruit_companies.name} not like 'Company%';;
+  }
+
+  join: recruit_tests_questions {
+    type: inner
+    relationship: one_to_many
+    sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id} ;;
+  }
+
+  join: questions {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${questions.id} = ${recruit_tests_questions.question_id} ;;
+  }
+
+  join: recruit_solves {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${recruit_tests_questions.question_id} = ${recruit_solves.qid}
+          and ${recruit_solves.aid} > 0
+          and ${recruit_solves.status} = 2
+      ;;
+  }
+
+
+  join: recruit_users {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${recruit_users.id} = ${questions.author_id}  ;;
+  }
+
+  join: derived_hrw_library_questions_mapping {
+    type: left_outer
+    relationship: one_to_one
+    sql_on: ${questions.id} = ${derived_hrw_library_questions_mapping.qid} ;;
+  }
+
+
+
+  join: derived_question_skill_mapping {
+    type: left_outer
+    relationship: one_to_many
+    sql_on: ${questions.id} = ${derived_question_skill_mapping.question_id}  ;;
   }
 
 }

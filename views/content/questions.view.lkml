@@ -139,21 +139,19 @@ view: questions {
 
   dimension: question_role_type {
     type: string
-    sql: case WHEN type = 'fullstack'
+    sql: case WHEN ${TABLE}.type = 'fullstack'
                    AND json_extract_path_text(type_attributes, 'role_type') = 'fullstack' THEN 'Fullstack-Fullstack'
-              WHEN type = 'fullstack'
+              WHEN ${TABLE}.type = 'fullstack'
                    AND json_extract_path_text(type_attributes, 'role_type') = 'mobile' THEN 'Fullstack-Mobile'
-              WHEN type = 'fullstack'
+              WHEN ${TABLE}.type = 'fullstack'
                    AND json_extract_path_text(type_attributes, 'role_type') = 'frontend' THEN 'Fullstack-Frontend'
-              WHEN type = 'fullstack'
+              WHEN ${TABLE}.type = 'fullstack'
                    AND json_extract_path_text(type_attributes, 'role_type') = 'backend' THEN 'Fullstack-Backend'
-              WHEN type = 'fullstack'
+              WHEN ${TABLE}.type = 'fullstack'
                    AND json_extract_path_text(type_attributes, 'role_type') = 'datascience' THEN 'Fullstack-Datascience'
-              WHEN type = 'sudorank' THEN 'Fullstack-Devops'
-              WHEN type = 'database' THEN 'Database'
-              WHEN type = 'fullstack'
-                   AND json_extract_path_text(type_attributes, 'role_type') IS NULL THEN 'Fullstack-NULL'
-              else type
+              WHEN ${TABLE}.type = 'sudorank' THEN 'Fullstack-Devops'
+              WHEN ${TABLE}.type = 'database' THEN 'Database'
+              else ${TABLE}.type
               end;;
   }
 
@@ -193,7 +191,7 @@ view: questions {
 
   dimension: is_leaked {
     type: string
-    sql: case when json_extract_path_text(custom,'show',true) = 'true' then 'True' else 'False' end ;;
+    sql: case when json_extract_path_text(${leaked_data},'show',true) = 'true' then 'True' else 'False' end ;;
   }
 
   parameter: date_granularity {
