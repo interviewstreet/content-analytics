@@ -1,5 +1,5 @@
 view: questions {
-  sql_table_name: content.questions ;;
+  sql_table_name: content_rs_replica.content.questions ;;
   drill_fields: [id]
 
   dimension: id {
@@ -197,7 +197,9 @@ view: questions {
 
   dimension: is_leaked {
     type: string
-    sql: case when json_extract_path_text(${leaked_data},'show',true) = 'true' then 'True' else 'False' end ;;
+    sql: case when json_extract_path_text(${leaked_data},'show',true) = 'true' then 'True'
+    when json_extract_path_text(${leaked_data},'show',true) = 'false' then 'False'
+    else null end ;;
   }
 
   dimension: skills {
