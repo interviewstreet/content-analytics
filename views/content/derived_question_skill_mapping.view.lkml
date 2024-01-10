@@ -4,7 +4,7 @@ view: derived_question_skill_mapping {
     sql: with  lib_q_skill_map as
             (
             select
-            id as question_id,
+            content_rs_replica.content.questions.id as question_id,
             json_extract_path_text(custom,'company',true) as company_id,
             created_at ,
             json_extract_path_text(custom,'skills',true) as skills,

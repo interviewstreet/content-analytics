@@ -207,6 +207,16 @@ view: questions {
     sql: json_extract_path_text(custom,'skills',true) ;;
   }
 
+  dimension: points {
+    type: number
+    sql: json_extract_path_text(${type_attributes},'points',true) ;;
+  }
+
+  dimension: recommended_duration {
+    type: number
+    sql: json_extract_path_text(${custom},'recommended_duration',true) ;;
+  }
+
   parameter: date_granularity {
     type: unquoted
     description: "Select the appropiate level of granularity for dashboard."
