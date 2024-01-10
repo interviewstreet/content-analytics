@@ -178,7 +178,7 @@ view: questions {
 
   measure: library_questions {
     type: count_distinct
-    sql: case when json_extract_path_text(custom,'company',true) = 14357 then id else null end ;;
+    sql: case when json_extract_path_text(custom,'company',true) = 14357 then ${id} else null end ;;
     }
 
   dimension: is_library_question {
@@ -187,7 +187,7 @@ view: questions {
   }
   measure: custom_questions {
     type: count_distinct
-    sql: case when json_extract_path_text(custom,'company',true) <> 14357 then id else null end ;;
+    sql: case when json_extract_path_text(custom,'company',true) <> 14357 then ${id} else null end ;;
 }
 
   dimension: MCQ_NonMCQ {
