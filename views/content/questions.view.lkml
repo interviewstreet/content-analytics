@@ -209,12 +209,15 @@ view: questions {
 
   dimension: points {
     type: number
-    sql: json_extract_path_text(${type_attributes},'points',true) ;;
+    sql: CASE
+        WHEN trim(json_extract_path_text(type_attributes,'points', true)) ~ '^[0-9.]+$' THEN json_extract_path_text(type_attributes,'points', true)::decimal
+        ELSE NULL
+    END;;
   }
 
   dimension: recommended_duration {
     type: number
-    sql: json_extract_path_text(${custom},'recommended_duration',true) ;;
+    sql: json_extract_path_text(${custom},'recommended_duration',true)::int ;;
   }
 
   parameter: date_granularity {
