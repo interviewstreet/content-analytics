@@ -85,7 +85,11 @@ view: derived_questions_avg_median {
               qstn_median
               inner join
               qstn_avg
-              on qstn_median.question_ID = qstn_avg.question_ID ;;
+              on qstn_median.question_ID = qstn_avg.question_ID
+--              inner join
+--              recruit_rs_replica.recruit.recruit_tests_questions rtq
+--              on rtq.question_id = qstn_avg.question_ID
+              ;;
     }
 
     measure: count {

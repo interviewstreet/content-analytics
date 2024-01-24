@@ -22,7 +22,7 @@ explore: questions {
     and lower(${recruit_companies.name}) not like '%hacker%rank%'
     and lower(${recruit_companies.name}) not like '%interviewstreet%'
     and lower(${recruit_companies.name}) not like '%interview%street%'
-    and ${recruit_companies.name} not like 'Company%';;
+    --and ${recruit_companies.name} not like 'Company%';;
   }
 
   join: recruit_users {
@@ -58,6 +58,12 @@ explore: questions {
     and ${recruit_tests.draft} =0
     and ${recruit_tests.state} <> 3;;
   }
+
+  join: recruit_companies_test_company_mapping {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${recruit_tests.company_id} = ${recruit_companies_test_company_mapping.id}
+;;  }
 
   join: recruit_attempts {
     type: left_outer
