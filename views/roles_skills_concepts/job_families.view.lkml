@@ -1,5 +1,5 @@
 view: job_families {
-  sql_table_name: role_prod.job_families ;;
+  sql_table_name: role_rs_replica.role_prod.job_families ;;
   drill_fields: [id]
 
   dimension: id {
