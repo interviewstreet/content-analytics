@@ -85,10 +85,22 @@ view: questions {
     type: number
     sql: ${TABLE}.score ;;
   }
-  dimension: stack {
+
+  # Modified by Ashish
+  # on May 20
+  dimension: stack_json {
     type: string
     sql: ${TABLE}.stack ;;
   }
+
+  # added by Ashish
+  # on May 20
+  dimension: stack_name {
+    type: string
+    sql: json_extract_path_text(${TABLE}.stack, 'name',true) ;;
+    description: "Stack is only present for project (fullstack) question types"
+  }
+
   dimension: status {
     type: number
     sql: ${TABLE}.status ;;
@@ -146,15 +158,15 @@ view: questions {
   dimension: question_role_type {
     type: string
     sql: case WHEN ${TABLE}.type = 'fullstack'
-                   AND json_extract_path_text(type_attributes, 'role_type') = 'fullstack' THEN 'Fullstack-Fullstack'
+                   AND json_extract_path_text(type_attributes, 'role_type',true) = 'fullstack' THEN 'Fullstack-Fullstack'
               WHEN ${TABLE}.type = 'fullstack'
-                   AND json_extract_path_text(type_attributes, 'role_type') = 'mobile' THEN 'Fullstack-Mobile'
+                   AND json_extract_path_text(type_attributes, 'role_type',true) = 'mobile' THEN 'Fullstack-Mobile'
               WHEN ${TABLE}.type = 'fullstack'
-                   AND json_extract_path_text(type_attributes, 'role_type') = 'frontend' THEN 'Fullstack-Frontend'
+                   AND json_extract_path_text(type_attributes, 'role_type',true) = 'frontend' THEN 'Fullstack-Frontend'
               WHEN ${TABLE}.type = 'fullstack'
-                   AND json_extract_path_text(type_attributes, 'role_type') = 'backend' THEN 'Fullstack-Backend'
+                   AND json_extract_path_text(type_attributes, 'role_type',true) = 'backend' THEN 'Fullstack-Backend'
               WHEN ${TABLE}.type = 'fullstack'
-                   AND json_extract_path_text(type_attributes, 'role_type') = 'datascience' THEN 'Fullstack-Datascience'
+                   AND json_extract_path_text(type_attributes, 'role_type',true) = 'datascience' THEN 'Fullstack-Datascience'
               WHEN ${TABLE}.type = 'sudorank' THEN 'Fullstack-Devops'
               WHEN ${TABLE}.type = 'database' THEN 'Database'
               else ${TABLE}.type
