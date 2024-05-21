@@ -33,6 +33,30 @@ view: recruit_solves {
     type: string
     sql: ${TABLE}.metadata ;;
   }
+
+  dimension: language_used {
+    type: string
+    sql:  json_extract_path_text(${metadata},'language',true);;
+  }
+
+  dimension: language_used_simplified {
+    type: string
+    sql:      case
+    WHEN  ${language_used} = 'java' THEN 'Java'
+    WHEN  ${language_used} = 'java15' THEN 'Java'
+    WHEN  ${language_used} = 'java8' THEN 'Java'
+    WHEN  ${language_used} = 'pypy' THEN 'Python'
+    WHEN  ${language_used} = 'pypy3' THEN 'Python'
+    WHEN  ${language_used} = 'python' THEN 'Python'
+    WHEN  ${language_used} = 'python3' THEN 'Python'
+    WHEN  ${language_used} = 'cpp' THEN 'C++'
+    WHEN  ${language_used} = 'cpp14' THEN 'C++'
+    WHEN  ${language_used} = 'cpp20' THEN 'C++'
+    WHEN  ${language_used} = 'csharp' THEN 'Csharp/.NET'
+    else ${language_used} end ;;
+  }
+
+
   dimension: processed {
     type: number
     sql: ${TABLE}.processed ;;
