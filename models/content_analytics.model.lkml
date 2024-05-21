@@ -32,7 +32,7 @@ explore: questions {
   }
 
   join: derived_hrw_library_questions_mapping {
-    type: left_outer
+    type: inner
     relationship: one_to_many
     sql_on: ${questions.id} = ${derived_hrw_library_questions_mapping.qid} ;;
   }
@@ -40,7 +40,7 @@ explore: questions {
 
 
   join: derived_question_skill_mapping {
-    type: left_outer
+    type: inner
     relationship: one_to_many
     sql_on: ${questions.id} = ${derived_question_skill_mapping.question_id}  ;;
   }

@@ -19,63 +19,39 @@ include: "/**/*.view.lkml"                 # include all views in this project
 #   }
 # }
 
-explore: job_families {
-  join: roles {
-    type: left_outer
-    relationship: one_to_many
-    sql_where: ${roles.standard} = 1 ;;
-    sql_on: ${job_families.id} = ${roles.job_family_id} ;;
-  }
-
-  join: role_skill_associations {
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${roles.id} = ${role_skill_associations.role_id} ;;
-  }
-
-  join: skills {
-    type: left_outer
-    relationship: many_to_one
-    sql_where: ${skills.standard} = 1 and ${skills.state} = 1 ;;
-    sql_on: ${role_skill_associations.skill_id} = ${skills.id} ;;
-  }
+explore: skills {
 
   join: library_questions {
-    type: left_outer
+    type: inner
     relationship: one_to_many
+    sql_where: ${skills.standard} = 1 and ${skills.state} = 1 ;;
     sql_on: ${skills.name} = ${library_questions.skill};;
   }
 
   join: questions {
-    type: left_outer
+    type: inner
     relationship: many_to_one
     sql_on: ${questions.id} = ${library_questions.qid};;
   }
 
-  join: recruit_tests_questions {
+  join: recruit_solves {
     type: left_outer
     relationship: one_to_many
-    sql_on: ${library_questions.qid} = ${recruit_tests_questions.question_id} ;;
+    sql_on: ${questions.id} = ${recruit_solves.qid}
+          and ${recruit_solves.aid} > 0
+          and ${recruit_solves.status} = 2
+      ;;
   }
-
-  join: recruit_tests {
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${recruit_tests.id} = ${recruit_tests_questions.test_id}
-          and ${recruit_tests.draft} =0
-          and ${recruit_tests.state} <> 3;;
-  }
-
-  join: recruit_companies_test_company_mapping {
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${recruit_tests.company_id} = ${recruit_companies_test_company_mapping.id}
-      ;;  }
+  # join: recruit_tests_questions {
+  #   type: left_outer
+  #   relationship: one_to_many
+  #   sql_on: ${library_questions.qid} = ${recruit_tests_questions.question_id} ;;
+  # }
 
   join: recruit_attempts {
     type: left_outer
     relationship: one_to_many
-    sql_on: ${recruit_tests.id} = abs(${recruit_attempts.tid})
+    sql_on: ${recruit_solves.aid} = abs(${recruit_attempts.tid})
           ----- ATTEMPT LEVEL FILTERS
       and lower(${recruit_attempts.email}) not like '%@hackerrank.com%'  --- Exclude HR internal emails
       and lower(${recruit_attempts.email}) not like '%@hackerrank.net%'
@@ -86,22 +62,23 @@ explore: job_families {
       ;;
   }
 
-  join: recruit_solves {
+  join: recruit_tests {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: abs(${recruit_attempts.tid}) = ${recruit_tests.id}
+          and ${recruit_tests.draft} =0
+          and ${recruit_tests.state} <> 3;;
+  }
+
+
+
+  join: recruit_test_feedback {
     type: left_outer
     relationship: one_to_many
-    sql_on: ${recruit_attempts.id} = ${recruit_solves.aid}
-          and ${recruit_tests_questions.question_id} = ${recruit_solves.qid}
-          and ${recruit_solves.aid} > 0
-          and ${recruit_solves.status} = 2
-      ;;
+    sql_on: ${recruit_tests.unique_id} = ${recruit_test_feedback.test_hash}
+          and
+          ${recruit_test_feedback.user_email} = ${recruit_attempts.email};;
   }
-}
 
-explore: skills {
 
-  join: library_questions {
-    type: left_outer
-    relationship: one_to_many
-    sql_on: ${skills.name} = ${library_questions.skill};;
-  }
 }
