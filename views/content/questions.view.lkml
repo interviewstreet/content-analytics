@@ -101,6 +101,14 @@ view: questions {
     description: "Stack is only present for project (fullstack) question types"
   }
 
+  # added by Sourabh
+  # on May 28
+  dimension: languages {
+    type: string
+    sql: json_extract_path_text(${TABLE}.type_attributes, 'languages', true) ;;
+    description: "langs. associated with question"
+  }
+
   dimension: status {
     type: number
     sql: ${TABLE}.status ;;
