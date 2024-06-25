@@ -40,6 +40,12 @@ explore: job_families {
     sql_on: ${role_skill_associations.skill_id} = ${skills.id} ;;
   }
 
+  join: ca_questions {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${questions.id} = ${ca_questions.question_id};;
+  }
+
   join: library_questions {
     type: left_outer
     relationship: one_to_many

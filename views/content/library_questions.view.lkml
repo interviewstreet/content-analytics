@@ -7,7 +7,7 @@ view: library_questions {
             inner join
             (select row_number() OVER (order by true)::integer - 1 as rn from  content_rs_replica.content.questions limit 10000) as seq
             on seq.rn < JSON_ARRAY_LENGTH(rl.questions)
-            and id IN (1,2,3,110,162,166,383,2188,2189,2190)
+            and id IN (1,2,3,110,162,166,383,2188,2189,2190,2164, 1910)
       ),
 
       skill_map as (
@@ -70,6 +70,13 @@ view: library_questions {
   dimension: type {
     type: string
     sql: ${TABLE}.type ;;
+  }
+
+  dimension: Mcq_NonMcq {
+    type: string
+    sql: case WHEN ${TABLE}.type = 'mcq' or ${TABLE}.type = 'multiple_mcq' THEN 'MCQ'
+              else 'Non MCQ'
+              end;;
   }
 
   set: detail {

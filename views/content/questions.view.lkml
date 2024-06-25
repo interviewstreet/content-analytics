@@ -181,6 +181,13 @@ view: questions {
               end;;
   }
 
+  dimension: Mcq_NonMcq {
+    type: string
+    sql: case WHEN ${TABLE}.type = 'mcq' or ${TABLE}.type = 'multiple_mcq' THEN 'MCQ'
+              else 'Non MCQ'
+              end;;
+  }
+
   dimension: company_id {
     type: number
     sql: json_extract_path_text(custom,'company',true)::integer ;;
