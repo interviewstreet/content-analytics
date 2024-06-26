@@ -51,6 +51,12 @@ view: library_questions {
     drill_fields: [qid, skill, type]
   }
 
+  measure: count_of_distinct_questions {
+    type: count_distinct
+    sql: ${qid} ;;
+    drill_fields: [qid]
+  }
+
   dimension: qid {
     type: string
     sql: ${TABLE}.qid ;;

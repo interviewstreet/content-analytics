@@ -40,6 +40,11 @@ view: skills {
     type: string
     sql: ${TABLE}.name ;;
   }
+
+  dimension: name_wo_prof {
+    type: string
+    sql: rtrim(ltrim(replace(replace(replace(name,'(Advanced)',''),'(Intermediate)',''),'(Basic)',''))) ;;
+  }
   dimension: proficiency {
     type: number
     sql: ${TABLE}.proficiency ;;
@@ -81,6 +86,24 @@ view: skills {
     type: count
     drill_fields: [id, name]
   }
+
+
+  measure: count_skills_wo_prof{
+    type: count_distinct
+    sql: ${name_wo_prof} ;;
+    drill_fields: [name_wo_prof]
+  }
+
+  measure: count_skills_w_prof{
+    type: count_distinct
+    sql: ${name} ;;
+    drill_fields: [name]
+  }
+
+
+
+
+
 
   parameter: date_granularity {
     type: unquoted

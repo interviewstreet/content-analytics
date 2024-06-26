@@ -111,3 +111,8 @@ explore: skills {
     sql_on: ${skills.name} = ${library_questions.skill};;
   }
 }
+
+
+explore: question_tag_mapping {}
+
+explore: question_skill_tag_mapping {}
