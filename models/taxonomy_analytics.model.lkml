@@ -115,4 +115,10 @@ explore: skills {
 
 explore: question_tag_mapping {}
 
-explore: question_skill_tag_mapping {}
+explore: question_skill_tag_mapping {
+  join: questions {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${questions.id} = ${question_skill_tag_mapping.qid}  ;;
+  }
+}

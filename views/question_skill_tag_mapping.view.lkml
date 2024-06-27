@@ -75,6 +75,11 @@ view: question_skill_tag_mapping {
       sql: ${TABLE}."tag" ;;
     }
 
+    dimension: type {
+      type: string
+      sql: ${TABLE}.type ;;
+    }
+
     dimension: qid {
       type: number
       sql: ${TABLE}.qid ;;
