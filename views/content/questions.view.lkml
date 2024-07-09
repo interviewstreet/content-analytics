@@ -156,7 +156,7 @@ view: questions {
   measure: question_count {
     type: count_distinct
     sql: ${id} ;;
-    drill_fields: [id, name, is_library_question, question_company_id, tags, author]
+    drill_fields: [id, name, is_library_question, question_company_id, tags, author, type, created_date]
   }
   dimension: question_company_id {
     type: number
