@@ -27,6 +27,23 @@ explore: job_families {
     sql_on: ${job_families.id} = ${roles.job_family_id} ;;
   }
 
+  # join: recruit_additional_tags {
+  #   type: inner
+  #   relationship: one_to_many
+  #   sql_on: ${roles.unique_id} = ${recruit_additional_tags.tag_type} ;;
+  # }
+  # join: recruit_additional_tag_mappings {
+  #   type: inner
+  #   relationship: many_to_many
+  #   sql_on: ${recruit_additional_tags.id} = ${recruit_additional_tag_mappings.tag_id} ;;
+  # }
+
+  # join: recruit_tests {
+  #   type: inner
+  #   relationship: many_to_one
+  #   sql_on: ${recruit_additional_tag_mappings.eid} = ${recruit_tests.id} ;;
+  # }
+
   join: role_skill_associations {
     type: left_outer
     relationship: one_to_many
