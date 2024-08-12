@@ -96,7 +96,12 @@ else 0 end;;
 
   dimension: max_score {
     type: number
-    sql: json_extract_path_text(${TABLE}.metadata,'max_score',true) ;;
+    sql: ${questions.points} ;;
+  }
+
+  measure: avg_percentage_score_for_questions_table{
+    type: average
+    sql: ${TABLE}.score;;
   }
 
   measure: avg_percentage_score {

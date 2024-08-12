@@ -16,9 +16,12 @@ view: derived_question_skill_mapping {
             case when json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) like '% (Basic)%' then rtrim(json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true), '(Basic)')
                 when json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) like '% (Advanced)%' then rtrim(json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true), '(Advanced)')
                 when json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) like '% (Intermediate)%' then rtrim(json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true), '(Intermediate)')
-                else json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) end as modified_skill_name -- Considering all 3 skills (basic, intermediate and advanced as one) )
+                else json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) end as modified_skill_name, -- Considering all 3 skills (basic, intermediate and advanced as one) )
             --json_extract_array_element_text(json_extract_path_text(custom,'skills_obj',true),seq.n, true) as skill_unique_id
-
+            case when json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) like '% (Basic)%' then  'Basic'
+                when json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) like '% (Advanced)%' then 'Advanced'
+                when json_extract_array_element_text(json_extract_path_text(custom,'skills',true),seq.n, true) like '% (Intermediate)%' then 'Intermediate'
+                else 'No Proficiency Defined' end as proficiency
       from content_rs_replica.content.questions
       inner join
       (select row_number() over(order by true)::integer - 1 as n from content_rs_replica.content.questions limit 20) seq
@@ -26,7 +29,7 @@ view: derived_question_skill_mapping {
       and product = 1
       )
 
-      select distinct question_id,created_at,skill,modified_skill_name, company_id
+      select distinct question_id,created_at,skill,modified_skill_name,proficiency, company_id
       from
       lib_q_skill_map ;;
   }
@@ -59,6 +62,12 @@ view: derived_question_skill_mapping {
   dimension: modified_skill_name {
     type: string
     sql: ${TABLE}.modified_skill_name ;;
+  }
+
+
+  dimension: proficiency {
+    type: string
+    sql: ${TABLE}.proficiency ;;
   }
 
   set: detail {

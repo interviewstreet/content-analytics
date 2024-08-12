@@ -244,8 +244,14 @@ view: questions {
 
   dimension: recommended_duration {
     type: number
-    sql: json_extract_path_text(${custom},'recommended_duration',true)::int ;;
+    sql:     COALESCE(NULLIF(trim(json_extract_path_text(questions.custom, 'recommended_duration', true)), '')::int, 0)  ;;
   }
+
+
+  dimension: avg_percentage_score {
+    type: number
+    sql:avg_percentage_score_from_solves/points;;
+    }
 
   parameter: date_granularity {
     type: unquoted
