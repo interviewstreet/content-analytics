@@ -142,6 +142,13 @@ view: questions {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.updated_at ;;
   }
+
+  dimension_group: Library_added_Details {
+    type: time
+    timeframes: [raw, time, date, week, month, quarter, year]
+    sql: json_extract_path_text(custom, 'added_to_library_on',true) ;;
+  }
+
   dimension: version {
     type: number
     sql: ${TABLE}.version ;;

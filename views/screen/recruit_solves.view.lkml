@@ -99,10 +99,7 @@ else 0 end;;
     sql: ${questions.points} ;;
   }
 
-  measure: avg_percentage_score_for_questions_table{
-    type: average
-    sql: ${TABLE}.score;;
-  }
+
 
   measure: avg_percentage_score {
     type: average
