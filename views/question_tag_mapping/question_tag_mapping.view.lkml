@@ -9,21 +9,21 @@ view: question_tag_mapping {
               and json_extract_path_text(custom, 'company',true) = 14357
              -- and rl.id IN (1,2,3,110,162,166,383,2188,2189,2190)
         )
-      ,lib_qstn as
-        (select DISTINCT json_extract_array_element_text(rl.questions, seq.rn) as qid
-              from recruit_rs_replica.recruit.recruit_library as rl
-              inner join
-              (select row_number() OVER (order by true)::integer - 1 as rn from  content_rs_replica.content.questions limit 10000) as seq
-              on seq.rn < JSON_ARRAY_LENGTH(rl.questions)
-              and rl.id IN (1,2,3,110,162,166,383,2188,2189,2190)
-        )
+--      ,lib_qstn as
+--        (select DISTINCT json_extract_array_element_text(rl.questions, seq.rn) as qid
+--              from recruit_rs_replica.recruit.recruit_library as rl
+--              inner join
+--              (select row_number() OVER (order by true)::integer - 1 as rn from  content_rs_replica.content.questions limit 10000) as seq
+--              on seq.rn < JSON_ARRAY_LENGTH(rl.questions)
+--              and rl.id IN (1,2,3,110,162,166,383,2188,2189,2190)
+--        )
 
-                    select distinct "tag", lib_qstn.qid as qid
+                    select distinct "tag", qid as qid
                     from
                     lib_tags
-                    join
-                    lib_qstn
-                    on lib_qstn.qid = lib_tags.qid
+--                    join
+--                    lib_qstn
+--                    on lib_qstn.qid = lib_tags.qid
                     --group by 1
                     ;;
     }

@@ -195,6 +195,11 @@ view: questions {
               end;;
   }
 
+  dimension: lines_of_code {
+    type: number
+    sql: LENGTH(REGEXP_REPLACE(internal_notes, '(^\s*$\n)+', '')) - LENGTH(REPLACE(REGEXP_REPLACE(internal_notes, '(^\s*$\n)+', ''), '\n', '')) + 1 ;;
+  }
+
   dimension: company_id {
     type: number
     sql: json_extract_path_text(custom,'company',true)::integer ;;
@@ -217,7 +222,7 @@ view: questions {
 
   dimension: is_library_question {
     type: string
-    sql: case when json_extract_path_text(custom,'company',true) = 14357 then 'Library' else 'Custom' end ;;
+    sql: case when json_extract_path_text(custom,'company',true) = 14357 then 'Hackerrank' else 'Custom' end ;;
   }
   measure: custom_questions {
     type: count_distinct
