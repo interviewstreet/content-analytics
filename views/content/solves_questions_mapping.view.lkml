@@ -146,7 +146,7 @@ view: solves_questions_mapping {
     dimension_group: Library_added_Details {
       type: time
       timeframes: [raw, time, date, week, month, quarter, year]
-      sql: json_extract_path_text(custom, 'added_to_library_on',true) ;;
+      sql: json_extract_path_text(${TABLE}.custom, 'added_to_library_on',true) ;;
     }
 
     dimension: version {
@@ -167,7 +167,7 @@ view: solves_questions_mapping {
     }
     dimension: question_company_id {
       type: number
-      sql: json_extract_path_text(custom,'company',true) ;;
+      sql: json_extract_path_text(${TABLE}.custom,'company',true) ;;
     }
 
     dimension: question_role_type {
@@ -202,7 +202,7 @@ view: solves_questions_mapping {
 
     dimension: company_id {
       type: number
-      sql: json_extract_path_text(custom,'company',true)::integer ;;
+      sql: json_extract_path_text(${TABLE}.custom,'company',true)::integer ;;
     }
 
     dimension: author_id {
@@ -243,13 +243,13 @@ view: solves_questions_mapping {
 
     dimension: skills {
       type: string
-      sql: json_extract_path_text(custom,'skills',true) ;;
+      sql: json_extract_path_text(${TABLE}.custom,'skills',true) ;;
     }
 
     dimension: points {
       type: number
       sql: CASE
-        WHEN trim(json_extract_path_text(type_attributes,'points', true)) ~ '^[0-9.]+$' THEN json_extract_path_text(type_attributes,'points', true)::decimal
+        WHEN trim(json_extract_path_text(${TABLE}.type_attributes,'points', true)) ~ '^[0-9.]+$' THEN json_extract_path_text(type_attributes,'points', true)::decimal
         ELSE NULL
     END;;
     }

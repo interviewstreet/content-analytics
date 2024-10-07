@@ -99,6 +99,12 @@ explore: questions {
     sql_on: ${solves_questions_mapping.id} = ${recruit_solves.qid} ;;
   }
 
+  join: solves_questions_companies_mapping {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${solves_questions_mapping.question_company_id} =  ${solves_questions_companies_mapping.id};;
+  }
+
 join: time_taken_per_question {
   type: left_outer
   relationship: one_to_many
