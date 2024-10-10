@@ -109,6 +109,7 @@ view: questions {
     sql: json_extract_path_text(${TABLE}.type_attributes, 'sub_type', true);;
     description: "Stack Type (from sub_type key value pair) is only present for project (fullstack) question types.
     Use this field with caution as stack_type is not beiing captured in sub_type field for questions created/upgraded with new flows"
+    case_sensitive: no
   }
 
   # added by Sourabh
@@ -117,6 +118,7 @@ view: questions {
     type: string
     sql: json_extract_path_text(${TABLE}.type_attributes, 'languages', true) ;;
     description: "langs. associated with question"
+    case_sensitive: no
   }
 
   dimension: status {
@@ -138,6 +140,7 @@ view: questions {
   dimension: type {
     type: string
     sql: ${TABLE}.type ;;
+    case_sensitive: no
   }
   dimension: type_attributes {
     type: string
@@ -196,6 +199,7 @@ view: questions {
               WHEN ${TABLE}.type = 'database' THEN 'Database'
               else ${TABLE}.type
               end;;
+    case_sensitive: no
   }
 
   dimension: Mcq_NonMcq {
@@ -223,6 +227,7 @@ view: questions {
   dimension: role_type {
     type: string
     sql: json_extract_path_text(type_attributes,'role_type',true) ;;
+    case_sensitive: no
   }
 
   measure: library_questions {
