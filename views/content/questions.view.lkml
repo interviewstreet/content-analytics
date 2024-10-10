@@ -103,7 +103,7 @@ view: questions {
 
   # added by Ashish
   # on Oct 9
-  dimension: project_stack_type {
+  dimension: project_stack_type_old {
     type: string
     sql: json_extract_path_text(${TABLE}.type_attributes, 'sub_type', true);;
     description: "Stack Type (from sub_type key value pair) is only present for project (fullstack) question types.
