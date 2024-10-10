@@ -93,4 +93,10 @@ view: recruit_attempts {
     type: count
     drill_fields: [id, full_name]
   }
+
+  measure: count_distinct_id {
+    type: count_distinct
+    sql: ${TABLE}.id ;;
+    value_format: "#,##0"
+  }
 }

@@ -86,4 +86,40 @@ view: recruit_test_feedback {
     type: count
     drill_fields: [id]
   }
+
+#### {{recruit_attempts.Count_distinct_id}}
+  measure: average_rating {
+    type: average
+    sql: round(${TABLE}.product_rating*1.00,2) ;;
+    drill_fields: [average_rating_company_level,average_rating_test_level]
+    value_format: "0.00"
+  }
+
+  # measure: weighted_rating {
+  #   type: number
+  #   sql: ${recruit_attempts.Count_distinct_id} * ${TABLE}.product_rating * 1.00 ;;
+  # }
+
+  # measure: weighted_average_rating {
+  #   type: number
+  #   sql: sum(${weighted_rating})/sum(${recruit_attempts.Count_distinct_id}) ;;
+  # }
+
+
+  measure: average_rating_test_level {
+    label: "Click # for Test Level Drill-Down"
+    type: average
+    sql: ${TABLE}.product_rating*1.00 ;;
+    drill_fields: [recruit_companies.id,recruit_companies.name,recruit_tests.id,recruit_tests.name,average_rating]
+  }
+
+  measure: average_rating_company_level {
+    label: "Click # for Company Level Drill-Down"
+    type: average
+    sql: ${TABLE}.product_rating*1.00 ;;
+    drill_fields: [recruit_companies.id,recruit_companies.name,average_rating]
+  }
+
+
+
 }

@@ -89,6 +89,14 @@ explore: questions {
 ;;
   }
 
+  join: recruit_test_feedback {
+    view_label: "Feedback Rating Last 90 days"
+    sql_on: ${recruit_test_feedback.test_hash} = ${recruit_tests.unique_id} and ${recruit_attempts.email} = ${recruit_test_feedback.user_email} and ${recruit_test_feedback.created_date} between
+      (CURRENT_DATE - INTERVAL '91 days') AND (CURRENT_DATE - INTERVAL '1 day') ;;
+    relationship: one_to_one
+    type: left_outer
+  }
+
   # join: avg {
   #   type: left_outer
   #   relationship: many_to_one
