@@ -101,6 +101,15 @@ view: questions {
     description: "Stack is only present for project (fullstack) question types"
   }
 
+  # added by Ashish
+  # on Oct 9
+  dimension: project_stack_type {
+    type: string
+    sql: json_extract_path_text(${TABLE}.type_attributes, 'sub_type', true);;
+    description: "Stack Type (from sub_type key value pair) is only present for project (fullstack) question types.
+    Use this field with caution as stack_type is not beiing captured in sub_type field for questions created/upgraded with new flows"
+  }
+
   # added by Sourabh
   # on May 28
   dimension: languages {
