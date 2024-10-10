@@ -64,6 +64,7 @@ view: questions {
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
+    case_sensitive: no
   }
   dimension: parent_id {
     type: number
